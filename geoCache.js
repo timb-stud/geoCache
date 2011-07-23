@@ -7,7 +7,8 @@ var geoCache = {
 		init: function(){
 			console.log("init page-main")
 			geoCache.getPosition();
-			$("button#refresh-position").tap(geoCache.getPosition);
+			$("a#refresh-position").tap(geoCache.getPosition);
+			$("a#refresh-map-position").tap(geoCache.refreshMap);
 			$("button#show-map").tap(function(){
 				geoCache.currentLat = $("span#current-lat").text();
 				geoCache.currentLon = $("span#current-lon").text();
@@ -23,10 +24,25 @@ var geoCache = {
 			geoCache.initMap();
 		}
 	},
+	refreshMap: function(){
+		if(geoCache.supports_geolocation()){
+			navigator.geolocation.getCurrentPosition(function(pos){
+				var	accuracy = pos.coords.accuracy,
+					lat = pos.coords.latitude,
+					lon = pos.coords.longitude;
+				
+				$("span#current-lat").text(lat);
+				$("span#current-lon").text(lon);
+				$("span#current-accuracy").text(accuracy);
+				$("span#current-address").text(city + " " + street + " " + streetNumber);
+			}, function(){
+				alert("ERROR: Cant't get your location.");
+			}, {enableHighAccuracy: true});
+		}
+	},
 	getPosition: function(){
 		if(geoCache.supports_geolocation()){
 			navigator.geolocation.getCurrentPosition(function(pos){
-				console.log(pos);
 				var city = pos.address.city,
 					street = pos.address.street,
 					streetNumber = pos.address.streetNumber,

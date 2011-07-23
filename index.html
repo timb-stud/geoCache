@@ -21,6 +21,7 @@
 		<div data-role="page" id="page-main">
 			<div data-role="header">
 				<h1>geoCache</h1>
+				<a id="refresh-position" data-icon="refresh" class="ui-btn-right">Refresh Position</a>
 			</div>
 			<div data-role="content">
 				<div id="current-position">
@@ -31,9 +32,6 @@
 					Accuracy: <span id="current-accuracy"></span>
 					<br />
 					Address: <span id="current-address"></span>
-					<button id="refresh-position" data-icon="refresh">
-						Refresh Position
-					</button>
 				</div>
 				<div data-role="fieldcontain">
 					<label for="dest-lat">Destination Latitude:</label>
@@ -51,6 +49,7 @@
 			<div data-role="header">
 				<a href="#page-main" data-icon="back">Back</a>
 				<h1>Map</h1>
+				<a id="refresh-map-position" data-icon="refresh">Refresh Position</a>
 			</div>
 			<div data-role="content">
 				<div id="map-canvas"></div>
