@@ -47,7 +47,6 @@ var geoCache = {
 				var accuracy = pos.coords.accuracy,
 					lat = pos.coords.latitude,
 					lon = pos.coords.longitude;
-				console.log(city, street, streetNumber);
 				$("span#current-lat").text(lat);
 				$("span#current-lon").text(lon);
 				$("span#current-accuracy").text(accuracy);
