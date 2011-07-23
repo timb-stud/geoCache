@@ -10,27 +10,14 @@
 		<script type="text/javascript" src="geoCache.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function() {
-				geoCache.getPosition();
-				$("button#refresh-position").tap(geoCache.getPosition);
-				$("button#show-map").tap(function(){
-					var currentLat = $("span#current-lat").text(),
-						currentLon = $("span#current-lon").text(),
-						destLat = $("input#dest-lat").attr("value"),
-						destLon = $("input#dest-lon").attr("value");
-						$.mobile.changePage("map.html?lat=" 	+ currentLat 
-																+ "&lon=" + currentLon
-																+ "&latDest=" + destLat
-																+ "&lonDest=" + destLon);
-				});
-				$("#page-map").live("pagebeforeshow", geoCache.initMap);
+				geoCache.page_main.init();
 			});
-
 		</script>
 		
 		<title>geoCache</title>
 	</head>
 	<body>
-		<div data-role="page" class="page-main">
+		<div data-role="page" id="page-main">
 			<div data-role="header">
 				<h1>geoCache</h1>
 			</div>
@@ -56,6 +43,16 @@
 					<input class="latlon" type="number" name="dest-lon" id="dest-lon" placeholder="6.000000"/>
 				</div>
 				<button id="show-map">Show on map</button>
+			</div>
+		</div>
+		<div data-role="page" id="page-map">
+			<link rel="stylesheet" href="map.css"/>
+			<div data-role="header">
+				<a href="#page-main" data-icon="back">Back</a>
+				<h1>Map</h1>
+			</div>
+			<div data-role="content">
+				<div id="map-canvas"></div>
 			</div>
 		</div>
 	</body>

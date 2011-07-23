@@ -1,4 +1,28 @@
 var geoCache = {
+	currentLat: undefined,
+	currentLon: undefined,
+	destLat: undefined,
+	destLon: undefined,
+	page_main: {
+		init: function(){
+			console.log("init page-main")
+			geoCache.getPosition();
+			$("button#refresh-position").tap(geoCache.getPosition);
+			$("button#show-map").tap(function(){
+				geoCache.currentLat = $("span#current-lat").text();
+				geoCache.currentLon = $("span#current-lon").text();
+				geoCache.destLat = $("input#dest-lat").attr("value");
+				geoCache.destLon = $("input#dest-lon").attr("value");
+				$.mobile.changePage("#page-map");
+			});
+			$("#page-map").live("pagebeforeshow", geoCache.page_map.init);
+		}
+	},
+	page_map: {
+		init: function(){
+			geoCache.initMap();
+		}
+	},
 	getPosition: function(){
 		if(geoCache.supports_geolocation()){
 			navigator.geolocation.getCurrentPosition(function(pos){
@@ -21,11 +45,10 @@ var geoCache = {
 		}
 	},
 	initMap: function(){
-		var urlVars = geoCache.getUrlVars();
-		console.log(urlVars);
+		console.log(geoCache);
 		var centerLatlng;
-		if(urlVars["lat"] && urlVars["lon"]){
-			centerLatlng = new google.maps.LatLng(urlVars["lat"], urlVars["lon"]);
+		if(geoCache.currentLat && geoCache.currentLat){
+			centerLatlng = new google.maps.LatLng(geoCache.currentLat, geoCache.currentLat);
 		}else{
 			centerLatlng = new google.maps.LatLng(49, 6);
 		}
@@ -35,8 +58,8 @@ var geoCache = {
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 			};
 		var map = new google.maps.Map(document.getElementById("map-canvas"), options);
-		if(urlVars["lat"] && urlVars["lon"]) {
-			var currentLatlng = new google.maps.LatLng(urlVars["lat"], urlVars["lon"]);
+		if(geoCache.currentLat && geoCache.currentLon) {
+			var currentLatlng = new google.maps.LatLng(geoCache.currentLat, geoCache.currentLon);
 			var currentMarker = new google.maps.Marker({
 				position : currentLatlng,
 				title : "Your Position",
@@ -47,8 +70,8 @@ var geoCache = {
 			});
 			currentInfoWindow.open(map, currentMarker);
 		}
-		if(urlVars["latDest"] && urlVars["lonDest"]) {
-			var destLatlng = new google.maps.LatLng(urlVars["latDest"], urlVars["lonDest"]);
+		if(geoCache.destLat && geoCache.destLon) {
+			var destLatlng = new google.maps.LatLng(geoCache.destLat, geoCache.destLon);
 			var destMarker = new google.maps.Marker({
 				position : destLatlng,
 				title : "Destination",
@@ -62,16 +85,5 @@ var geoCache = {
 	},
 	supports_geolocation: function(){
 		return !!navigator.geolocation;
-	},
-	getUrlVars: function(){
-		var vars = [], hash;
-		var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-		for(var i = 0; i < hashes.length; i++)
-		{
-		    hash = hashes[i].split('=');
-		    vars.push(hash[0]);
-		    vars[hash[0]] = hash[1];
-		}
-		return vars;
 	}
 };
