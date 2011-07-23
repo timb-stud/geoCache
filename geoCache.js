@@ -15,7 +15,9 @@ var geoCache = {
 				$("span#current-lon").text(lon);
 				$("span#current-accuracy").text(accuracy);
 				$("span#current-address").text(city + " " + street + " " + streetNumber);
-			});
+			}, function(){
+				alert("ERROR: Cant't get your location.");
+			}, {enableHighAccuracy: true});
 		}
 	},
 	initMap: function(){
