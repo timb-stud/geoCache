@@ -19,6 +19,7 @@ var geoCache = {
 		}
 	},
 	initMap: function(){
+		console.log("map init");
 		var latlng = new google.maps.LatLng(49.000000, 6.000000),
 			options = {
 				zoom: 8,
