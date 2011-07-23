@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.css" type="text/css" charset="utf-8"/>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+		<script type="text/javascript" src="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.js"></script>
+		<script type="text/javascript" src="geoCache.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				geoCache.getPosition();
+				$("button#refresh-position").tap(geoCache.getPosition);
+				$("button#show-map").tap(function(){
+					var currentLat = $("span#current-lat").text(),
+						currentLon = $("span#current-lon").text(),
+						destLat = $("input#dest-lat").attr("value"),
+						destLon = $("input#dest-lon").attr("value");
+						$.mobile.changePage("map.html?lat=" 	+ currentLat 
+																+ "&lon=" + currentLon
+																+ "&latDest=" + destLat
+																+ "&lonDest=" + destLon);
+				});
+				$()
+			});
+
+		</script>
+		<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+		<title>geoCache</title>
+	</head>
+	<body>
+		<div data-role="page" class="page-main">
+			<div data-role="header">
+				<h1>geoCache</h1>
+			</div>
+			<div data-role="content">
+				<div id="current-position">
+					Latitude: <span id="current-lat"></span>
+					<br />
+					Longitude: <span id="current-lon"></span>
+					<br />
+					Accuracy: <span id="current-accuracy"></span>
+					<br />
+					Address: <span id="current-address"></span>
+					<button id="refresh-position" data-icon="refresh">
+						Refresh Position
+					</button>
+				</div>
+				<div data-role="fieldcontain">
+					<label for="dest-lat">Destination Latitude:</label>
+					<input class="latlon" type="number" name="dest-lat" id="dest-lat" placeholder="49.000000"/>
+				</div>
+				<div data-role="fieldcontain">
+					<label for="dest-lon">Destination Longitude:</label>
+					<input class="latlon" type="number" name="dest-lon" id="dest-lon" placeholder="6.000000"/>
+				</div>
+				<button id="show-map">Show on map</button>
+			</div>
+		</div>
+	</body>
+</html>
