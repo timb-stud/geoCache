@@ -2,7 +2,7 @@
 <html lang="en-US">
 	<head>
 		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 		<title>Map</title>
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.css" type="text/css" charset="utf-8"/>
 		<style type="text/css" media="screen">
@@ -14,13 +14,12 @@
 		<script type="text/javascript" src="geoCache.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
-				map.init();
+				geoCache.initMap();
 			});
 		</script>
 	</head>
 	<body>
 		<div data-role="page" class="page-map">
-			<script src="map.js"></script>
 			<div data-role="header">
 				<h1>Map</h1>
 			</div>
